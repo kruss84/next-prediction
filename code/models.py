@@ -792,6 +792,7 @@ class Model(object):
     # encoder features
     # ------------------------------------- xy input
 
+    #print(data.keys())
     assert len(data['obs_traj_rel']) == N
 
     for i, (obs_data, pred_data) in enumerate(zip(data['obs_traj_rel'],
@@ -811,6 +812,8 @@ class Model(object):
     feed_dict[self.obs_scene] = obs_scene
     feed_dict[self.obs_scene_mask] = obs_scene_mask
     feed_dict[self.scene_feat] = data['batch_scene_feat']
+
+    print('batch_scene_feat', data['batch_scene_feat'].shape)
 
     # each bacth
     for i in range(len(data['batch_obs_scene'])):
@@ -1333,6 +1336,9 @@ class Tester(object):
 
     inputs = [self.traj_pred_out]
 
+    print(inputs[0])
+    print(self.traj_pred_out, self.future_act_logits)
+
     num_out = 1
     if config.add_activity:
       inputs += [self.future_act_logits]
@@ -1344,9 +1350,14 @@ class Tester(object):
 
     inputs += self.grid_pred_class
 
+
+    print(feed_dict.keys())
     outputs = sess.run(inputs, feed_dict=feed_dict)
+    print(feed_dict.keys())
 
     pred_out = outputs[0]
+
+    print(pred_out.shape)
 
     if config.add_activity:
       future_act = outputs[1]

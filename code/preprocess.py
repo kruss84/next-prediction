@@ -278,7 +278,7 @@ def prepro_each(traj_path, split, prepro_path, args):
         person_box_path = os.path.join(
             args.person_box_path, "%s.p" % videoname)
       with open(person_box_path, "rb") as f:
-        person_boxes = pickle.load(f)
+        person_boxes = pickle.load(f, encoding='latin1')
 
     if args.add_other_box:
       other_box_path = os.path.join(
@@ -286,13 +286,13 @@ def prepro_each(traj_path, split, prepro_path, args):
       if args.feature_no_split:
         other_box_path = os.path.join(args.other_box_path, "%s.p" % videoname)
       with open(other_box_path, "rb") as f:
-        other_boxes = pickle.load(f)
+        other_boxes = pickle.load(f, encoding='latin1')
 
     if args.add_activity:
       activity_path = os.path.join(
           args.activity_path, split, "%s.p" % videoname)
       with open(activity_path, "rb") as f:
-        activities = pickle.load(f)
+        activities = pickle.load(f, encoding='latin1')
 
     # [N,4], [frame_idx, person_id,x,y]
     data = []
