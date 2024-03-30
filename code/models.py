@@ -813,8 +813,6 @@ class Model(object):
     feed_dict[self.obs_scene_mask] = obs_scene_mask
     feed_dict[self.scene_feat] = data['batch_scene_feat']
 
-    print('batch_scene_feat', data['batch_scene_feat'].shape)
-
     # each bacth
     for i in range(len(data['batch_obs_scene'])):
       for j in range(len(data['batch_obs_scene'][i])):
@@ -1336,8 +1334,7 @@ class Tester(object):
 
     inputs = [self.traj_pred_out]
 
-    print(inputs[0])
-    print(self.traj_pred_out, self.future_act_logits)
+
 
     num_out = 1
     if config.add_activity:
@@ -1349,15 +1346,8 @@ class Tester(object):
       num_out += 2
 
     inputs += self.grid_pred_class
-
-
-    print(feed_dict.keys())
     outputs = sess.run(inputs, feed_dict=feed_dict)
-    print(feed_dict.keys())
-
     pred_out = outputs[0]
-
-    print(pred_out.shape)
 
     if config.add_activity:
       future_act = outputs[1]

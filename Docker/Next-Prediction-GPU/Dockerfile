@@ -16,11 +16,11 @@ RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
 # Setze Umgebungsvariable für Python auf Python 3.6
 ENV PYTHON=python3.6
 
-COPY ./cudnn-10.0-linux-x64-v7.5.0.56.tgz ./src/
+#COPY ./cudnn-10.0-linux-x64-v7.5.0.56.tgz ./src/
 WORKDIR ./src
-RUN tar -xvf cudnn-10.0-linux-x64-v7.5.0.56.tgz
-RUN sudo cp -vR cuda/include/* /usr/local/cuda/include
-RUN sudo cp -vR cuda/lib64/* /usr/local/cuda/lib64
+#RUN tar -xvf cudnn-10.0-linux-x64-v7.5.0.56.tgz
+#RUN sudo cp -vR cuda/include/* /usr/local/cuda/include
+#RUN sudo cp -vR cuda/lib64/* /usr/local/cuda/lib64
 
 RUN pip3 install --user tensorflow-gpu==1.15.2
 RUN pip3 show tensorflow-gpu

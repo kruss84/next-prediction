@@ -407,11 +407,8 @@ def evaluate(dataset, config, sess, tester):
   if config.is_actev:
     traj_class_correct_cat = [[] for i in range(len(config.traj_cats))]
 
-  print("For batch Size: ", config.batch_size, total=num_batches_per_epoch)
   for evalbatch in tqdm.tqdm(dataset.get_batches(config.batch_size, \
     full=True, shuffle=False), total=num_batches_per_epoch, ascii=True):
-
-    #print("Len of a batch: ", len(evalbatch), len(evalbatch[0]), evalbatch[1])
 
     # [N,pred_len, 2]
     # here the output is relative output

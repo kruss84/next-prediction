@@ -4,7 +4,7 @@ datasets="eth hotel univ zara1 zara2"
 for dataset in $datasets
 do
     	echo "$dataset"
-	docker run --gpus all -it -v $(pwd)/../..:/src  --rm tensorflow/tensorflow:Next-Prediction-GPU \
+	docker run --gpus all -it -v $(pwd)/../..:/src/next-prediction  --rm tensorflow/tensorflow:Next-Prediction-GPU \
 	python3 code/preprocess.py next-data/final_annos/ucyeth_annos/original_trajs/${dataset}/ ethucy_exp/preprocess_${dataset} \
 	--person_boxkey2id next-data/final_annos/ucyeth_annos/${dataset}_person_boxkey2id.p \
 	--obs_len 8 --pred_len 12 --min_ped 1 --add_scene \
