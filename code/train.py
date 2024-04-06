@@ -29,8 +29,8 @@ import tensorflow as tf
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 # the following will still have colocation debug info
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-
+#tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+tf.logging.set_verbosity(tf.logging.ERROR)
 import models
 from tqdm import tqdm
 import utils

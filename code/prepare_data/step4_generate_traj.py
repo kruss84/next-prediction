@@ -11,7 +11,8 @@ import argparse
 import os
 import operator
 import numpy as np
-import cPickle as pickle
+#import cPickle as pickle
+import pickle
 from tqdm import tqdm
 from glob import glob
 from utils import activity2id
@@ -192,7 +193,7 @@ if __name__ == "__main__":
 
       # each frame's all boxes, for getting other boxes
       frameidx2boxes = data["frameidx2boxes"]
-
+      #print(data)
       # personId -> all related activity with timespan, sorted by timespan start
       # (start, end, act_classid)
       personid2acts = data["personid2acts"]
@@ -201,8 +202,8 @@ if __name__ == "__main__":
       frame_lst = glob(os.path.join(args.scene_feat_path,
                                     "%s_F_*.npy"%videoname))
       if frame_lst == []:
-	print(videoname)
-      	continue
+        print(videoname)
+        continue
       assert frame_lst
       frame_lst = [(os.path.basename(frame),
                     int(os.path.basename(frame).split(".")[0].split("_F_")[-1]))
@@ -244,14 +245,14 @@ if __name__ == "__main__":
           this_person_idx = all_boxes["trackids"].index(person_id)
 
           all_other_boxes = [all_boxes["boxes"][i]
-                             for i in xrange(len(all_boxes["boxes"]))
+                             for i in range(len(all_boxes["boxes"]))
                              if i != this_person_idx]
           all_other_boxclassids = [all_boxes["classids"][i]
-                                   for i in xrange(len(all_boxes["classids"]))
+                                   for i in range(len(all_boxes["classids"]))
                                    if i != this_person_idx]
 
           # resize the box if needed
-          for i in xrange(len(all_other_boxes)):
+          for i in range(len(all_other_boxes)):
             all_other_boxes[i] = resize_box(all_other_boxes[i], videoname,
                                             args.resize_w, args.resize_h)
 
@@ -336,3 +337,4 @@ if __name__ == "__main__":
       with open(os.path.join(args.scene_map_path,
                              split, "%s.p" % videoname), "w") as f:
         pickle.dump(scene_data, f)
+

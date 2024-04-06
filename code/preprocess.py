@@ -278,7 +278,7 @@ def prepro_each(traj_path, split, prepro_path, args):
         person_box_path = os.path.join(
             args.person_box_path, "%s.p" % videoname)
       with open(person_box_path, "rb") as f:
-        person_boxes = pickle.load(f, encoding='latin1')
+        person_boxes = pickle.load(f)
 
     if args.add_other_box:
       other_box_path = os.path.join(
@@ -286,13 +286,13 @@ def prepro_each(traj_path, split, prepro_path, args):
       if args.feature_no_split:
         other_box_path = os.path.join(args.other_box_path, "%s.p" % videoname)
       with open(other_box_path, "rb") as f:
-        other_boxes = pickle.load(f, encoding='latin1')
+        other_boxes = pickle.load(f)
 
     if args.add_activity:
       activity_path = os.path.join(
           args.activity_path, split, "%s.p" % videoname)
       with open(activity_path, "rb") as f:
-        activities = pickle.load(f, encoding='latin1')
+        activities = pickle.load(f)
 
     # [N,4], [frame_idx, person_id,x,y]
     data = []
@@ -466,7 +466,10 @@ def prepro_each(traj_path, split, prepro_path, args):
           for i, frame_idx in enumerate(frame_idxs):
             key = "%d_%d" % (frame_idx, person_id)
             # ignore the kp logits
-            kp_feat[count_person, i, :, :] = kp_feats[key][:, :2]
+            if key in kp_feats:
+              kp_feat[count_person, i, :, :] = kp_feats[key][:, :2]
+            else:
+              print(key)
 
           kp_feat_rel[count_person, 1:, :, :] = \
               kp_feat[count_person, 1:, :, :] - kp_feat[count_person, :-1, :, :]
@@ -483,7 +486,10 @@ def prepro_each(traj_path, split, prepro_path, args):
               if args.person_boxkey2id is not None:
                 # use the boxid from previous preprocessed files
                 # to reproduce experiments
-                prev_boxid = args.person_boxkey2id[split][key]
+                if key in args.person_boxkey2id[split]:
+                  prev_boxid = args.person_boxkey2id[split][key]
+                else:
+                  print(key)
                 person_boxkey2id[key] = prev_boxid
                 person_boxid2key[prev_boxid] = key
               else:

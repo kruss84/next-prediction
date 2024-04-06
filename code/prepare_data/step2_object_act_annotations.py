@@ -10,8 +10,10 @@ from __future__ import print_function
 import argparse
 import os
 import operator
-import cPickle as pickle
+#import cPickle as pickle
+import pickle
 import yaml
+import json
 from tqdm import tqdm
 from utils import activity2id
 from utils import object2id
@@ -40,7 +42,7 @@ def load_yml_file_without_meta(yml_file):
     data = yaml.load(f, Loader=yaml.FullLoader)
     # get the meta index first
     mi = -1
-    for i in xrange(len(data)):
+    for i in range(len(data)):
       if "meta" not in data[i]:
         mi = i
         break
@@ -57,7 +59,7 @@ def load_tracks(track_file):
     one = one["types"]  # added in v1_update
     # v4, changed to - { types: { id1: 0 , cset3: { Person: 1.0 } } }
     if "obj_type" not in one:
-      one["obj_type"] = one["cset3"].keys()[0]
+      one["obj_type"] = list(one["cset3"].keys())[0]
       assert len(one["cset3"].keys()) == 1
     trackid2object_[int(one["id1"])] = one["obj_type"]
   return trackid2object_
@@ -72,7 +74,7 @@ def load_activities(act_file_, trackid2object_, activity2id_):
     act_name = one["act2"]
     if isinstance(act_name, type({})):
       assert len(act_name.keys()) == 1
-      act_name = act_name.keys()[0]
+      act_name = list(act_name.keys())[0]
     # ignore other activities
     if act_name in activity2id_:
       act_classid = activity2id[act_name]
@@ -141,11 +143,11 @@ if __name__ == "__main__":
 
     # load each track id and its trajectories
     origin_trackid2object = load_tracks(type_file)
-
+    print(origin_trackid2object)
     trackid2object = {trackid: origin_trackid2object[trackid]
                       for trackid in origin_trackid2object
                       if origin_trackid2object[trackid] in object2id}
-
+    print(trackid2object)
     # load traj boxes for the trackid
     person_tracks = {}  # trackid -> boxes
     frameidx2boxes = {}  # each frame all boxes
@@ -180,11 +182,16 @@ if __name__ == "__main__":
     # personid -> (start, end, act_classid)
     personid2acts = load_activities(act_file, trackid2object, activity2id)
 
+    #print(person_tracks)
+    #print(frameidx2boxes)
+    #print(personid2acts)
     anno = {
         "person_tracks": person_tracks,
         "frameidx2boxes": frameidx2boxes,
         "personid2acts": personid2acts
     }
+
     target_file = os.path.join(args.out_path, "%s.npz" % (video_filename))
-    with open(target_file, "w") as fw:
+    with open(target_file, "wb") as fw:
       pickle.dump(anno, fw)
+    break
