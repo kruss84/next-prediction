@@ -9,7 +9,8 @@ from __future__ import print_function
 # pylint: disable=g-bad-import-order
 # pylint: disable=broad-except
 import argparse
-import cPickle as pickle
+#import cPickle as pickle
+import pickle
 import numpy as np
 import os
 
@@ -21,7 +22,7 @@ parser.add_argument("kp_pickle")
 if __name__ == "__main__":
   args = parser.parse_args()
 
-  with open(args.box_pickle, "r") as f:
+  with open(args.box_pickle, "rb") as f:
     box_dict = pickle.load(f)
 
   videoname = os.path.splitext(os.path.basename(args.box_pickle))[0]
@@ -49,5 +50,5 @@ if __name__ == "__main__":
   print("%s, total person instance %s, got keypoint %s, failed %s,"
         " fail rate %.3f" % (videoname, len(box_dict), len(kp_dict),
                              count_failed, count_failed/float(len(box_dict))))
-  with open(args.kp_pickle, "w") as f:
+  with open(args.kp_pickle, "wb") as f:
     pickle.dump(kp_dict, f)

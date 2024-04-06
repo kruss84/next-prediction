@@ -8,7 +8,8 @@ from __future__ import print_function
 # pylint: disable=g-importing-member
 # pylint: disable=g-bad-import-order
 import argparse
-import cPickle as pickle
+#import cPickle as pickle
+import pickle
 import json
 import os
 
@@ -26,7 +27,7 @@ def convert_box(box):
 if __name__ == "__main__":
   args = parser.parse_args()
 
-  with open(args.box_pickle, "r") as f:
+  with open(args.box_pickle, "rb") as f:
     box_dict = pickle.load(f)
 
   videoname = os.path.splitext(os.path.basename(args.box_pickle))[0]

@@ -1,0 +1,11 @@
+version: "3.0"
+services:
+    deep-high-resolution-gpu:
+        image: pytorch/pytorch:deep-high-resolution-gpu
+        build:
+            context: ../../
+            dockerfile: ./Docker/Deep-High_Resolution-GPU/Dockerfile
+        volumes:
+             - ./record:/record
+        command: bash #192.168.55.1:8888 # please set the ip of the HemiStereo device
+

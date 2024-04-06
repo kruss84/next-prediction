@@ -200,6 +200,9 @@ if __name__ == "__main__":
       # load all the frames for this video first
       frame_lst = glob(os.path.join(args.scene_feat_path,
                                     "%s_F_*.npy"%videoname))
+      if frame_lst == []:
+	print(videoname)
+      	continue
       assert frame_lst
       frame_lst = [(os.path.basename(frame),
                     int(os.path.basename(frame).split(".")[0].split("_F_")[-1]))

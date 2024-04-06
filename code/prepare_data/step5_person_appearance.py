@@ -13,7 +13,8 @@ import cv2
 import itertools
 import os
 import numpy as np
-import cPickle as pickle
+#import cPickle as pickle
+import pickle
 import tensorflow as tf
 import sys
 
@@ -224,8 +225,13 @@ def process(config, split, sess):
     videoname = os.path.splitext(os.path.basename(traj_file))[0]
 
     # load the person box data
-    with open(os.path.join(person_box_path, "%s.p" % videoname)) as f:
+    with open(os.path.join(person_box_path, "%s.p" % videoname),'rb') as f:
+      print(f)
       person_box_data = pickle.load(f)  # framenum_personid => box
+    if person_box_data is None:
+      print("Fehler beim Laden der Personenfelddaten.")
+      continue
+
 
     # each line of the trajectory file should have one feature
     with open(traj_file, "r") as f:

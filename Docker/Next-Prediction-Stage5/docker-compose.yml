@@ -1,0 +1,11 @@
+version: "3.0"
+services:
+    next-predicition-gpu:
+        image: tensorflow/tensorflow:Next-Prediction-Stage5
+        build:
+            context: ../../
+            dockerfile: ./Docker/Next-Prediction-Stage5/Dockerfile
+        volumes:
+             - ./record:/record
+        command: bash #192.168.55.1:8888 # please set the ip of the HemiStereo device
+

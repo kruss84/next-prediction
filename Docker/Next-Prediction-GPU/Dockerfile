@@ -1,8 +1,5 @@
 FROM tensorflow/tensorflow:custom-op-gpu-ubuntu16-cuda10.0 AS builder
 
-
-
-
 # Installiere Python 3.6
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.6 \
