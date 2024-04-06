@@ -1,0 +1,10 @@
+*.npz
+*.npy
+*.mp4
+*.p
+*.txt
+*.jpg
+*.yml
+*.log
+*.json
+next-models
