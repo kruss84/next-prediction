@@ -64,6 +64,7 @@ deeplabv3_xception_ade20k_train.pb actev_all_video_frames_scene_seg_every30_36x6
 ```
 find $PWD/eki_all_frames/ -name "*.jpg" -print0 |sort -z| xargs -r0 echo|sed 's/ /\n/g'  > eki_all_video_frames.ordered.lst
 
+python step3_scene_semantics.py eki_all_video_frames.ordered.lst deeplabv3_xception_ade20k_train.pb eki_all_video_frames_scene_seg_every30_36x64 --every 10 --down_rate 8.
 ```
 
 [Here](https://precognition.team/next/data/072019_prepare_data/VIRAT_S_000007_ade20k.mp4) is a visualization of the output.
