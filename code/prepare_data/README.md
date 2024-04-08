@@ -37,6 +37,11 @@ $ python step2_object_act_annotations.py data_splits/all.lst \
 actev_all_annotations/ actev_all_obj-track-act
 ```
 
+```
+python step2_read_json.py data_splits/all.lst eki_all_obj_json/ eki_all_objs
+```
+
+
 # Step 3. Get scene semantic segmentation features [ADE20K pre-trained model]
 ```
 # Download the Deeplabv3 pre-trained model: deeplabv3_xception_ade20k_train
