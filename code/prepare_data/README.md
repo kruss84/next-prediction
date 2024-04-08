@@ -76,7 +76,9 @@ $ python step4_generate_traj.py actev_all_obj-track-act/ data_splits/ traj_2.5fp
 --scene_map_path anno_scene --person_box_path anno_person_box --other_box_path \
 anno_other_box --activity_path anno_activity
 ```
-
+```
+python step4_generate_traj.py eki_all_objs/ data_splits/ traj_2.5fps --drop_frame 4 --scene_feat_path eki_all_video_frames_scene_seg_every30_36x64/ --scene_map_path anno_scene --person_box_path anno_person_box --other_box_path anno_other_box --activity_path anno_activity
+```
 # Step 5. Get person appearance features
 ```
 # Get the pre-trained object detection model to extract features.
