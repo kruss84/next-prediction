@@ -20,6 +20,10 @@ $ python step1_get_frames.py actev_all_videos/ actev_all_video_frames \
 --resize --size 1080 --maxsize 1920
 ```
 
+```
+python step1_get_frames.py eki_all_vidoes/ eki_all_frames --resize --size 1080 --maxsize 1920
+```
+
 # Step 2. Get object/trajectory/activity ground truth labels
 ```
 # Download the original ActEV labels. Please do get permission from the official website
