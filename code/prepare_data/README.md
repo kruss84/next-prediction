@@ -140,6 +140,25 @@ $line hrnet_kp_out/${videoname} anno_kp/${split}/${videoname}.p;done
 
 # Check for fail rate==1.0 videos. Run them again to fix them.
 ```
+```
+mkdir anno_person_box_json/
+
+ls anno_person_box/*/*.p | while read line;do videoname=$(basename $line .p); python step6-1_get_person_json_box.py $line anno_person_box_json/${videoname}.json;done
+
+mkdir hrnet_kp_out/
+
+ls anno_person_box/*/* |while read line;do videoname=$(basename $line .p); \
+python3 deep-high-resolution-net.pytorch/tools/test.py --cfg \
+deep-high-resolution-net.pytorch/experiments/coco/hrnet/w48_384x288_adam_lr1e-3.yaml \
+TEST.MODEL_FILE pose_hrnet_w48_384x288.pth OUTPUT_DIR hrnet_kp_out/${videoname} \
+VIDEONAME ${videoname} FRAMEPATH eki_all_frames/ TEST.USE_GT_BBOX False \
+COCO_JSON person_keypoints_val2017.json TEST.COCO_BBOX_FILE \
+anno_person_box_json/${videoname}.json TEST.BATCH_SIZE_PER_GPU 32 \
+GPUS "(0,)" CHECK_IMG True;done
+```
+
+
+
 [Here](https://precognition.team/next/data/072019_prepare_data/VIRAT_S_040103_08_001475_001512_hrnet.mp4) is the person keypoint visualization.
 
 # Preprocess
