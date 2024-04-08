@@ -99,7 +99,9 @@ actev_all_video_frames Object_Detection_Tracking/obj_v3_model/ \
 person_appearance_features person_boxkey2id.p --imgh 1080 --imgw 1920 \
 --person_h 9 --person_w 5 --gpuid 0
 ```
-
+```
+python step5_person_appearance.py traj_2.5fps/ anno_person_box/ eki_all_frames Object_Detection_Tracking/obj_v3_model/ person_appearance_features person_boxkey2id.p --imgh 1080 --imgw 1440 --person_h 9 --person_w 5 --gpuid 0
+```
 # Step 6. Get person keypoint features
 Different from in the paper, we switch to use [HRNet](https://github.com/leoxiaobin/deep-high-resolution-net.pytorch) here. We have modified the original code (minimally) to allow inferencing on ActEV video frames and not exiting when an image file does not exist.
 ```
