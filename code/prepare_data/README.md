@@ -155,6 +155,19 @@ VIDEONAME ${videoname} FRAMEPATH eki_all_frames/ TEST.USE_GT_BBOX False \
 COCO_JSON person_keypoints_val2017.json TEST.COCO_BBOX_FILE \
 anno_person_box_json/${videoname}.json TEST.BATCH_SIZE_PER_GPU 32 \
 GPUS "(0,)" CHECK_IMG True;done
+
+split=val; mkdir -p anno_kp/${split}; ls $PWD/anno_person_box/${split}/* \
+|while read line;do videoname=$(basename $line .p); python step6-2_hrnet_output_to_pickle.py \
+$line hrnet_kp_out/${videoname} anno_kp/${split}/${videoname}.p;done
+
+split=test; mkdir -p anno_kp/${split}; ls $PWD/anno_person_box/${split}/* \
+|while read line;do videoname=$(basename $line .p); python step6-2_hrnet_output_to_pickle.py \
+$line hrnet_kp_out/${videoname} anno_kp/${split}/${videoname}.p;done
+
+split=train; mkdir -p anno_kp/${split}; ls $PWD/anno_person_box/${split}/* \
+|while read line;do videoname=$(basename $line .p); python step6-2_hrnet_output_to_pickle.py \
+$line hrnet_kp_out/${videoname} anno_kp/${split}/${videoname}.p;done
+
 ```
 
 
